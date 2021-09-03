@@ -1,0 +1,45 @@
+﻿@model IEnumerable<RateLimitWebApplication.ViewModel.ArticalViewModel>
+@{
+    ViewBag.Title = "Rating";
+}
+
+<h2>Rating</h2>
+
+<table style="width:100%;border:1px solid red">
+    <thead>
+
+        <tr>
+            <th>
+                ArticalId
+            </th>
+            <th>
+                ArticalName
+            </th>
+            <th>
+                ArticalDescription
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ArticalId
+            </td>
+             <td>
+                @item.ArticalName
+            </td>
+             <td>
+                @item.ArticalDescription
+            </td>
+             <td>
+                @Html.ActionLink("Add/View Comment","ShowComment" ,new {articalId=item.ArticalId})
+            </td>
+        </tr>
+    }
+
+</table>

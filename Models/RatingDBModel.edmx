@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RateLimitDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Artical_Tbl">
+          <Key>
+            <PropertyRef Name="ArticalId" />
+          </Key>
+          <Property Name="ArticalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArticalName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ArticalDescription" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comment_Tbl">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArticalId" Type="int" Nullable="false" />
+          <Property Name="GuestId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CommentDescription" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Rating" Type="int" Nullable="false" />
+          <Property Name="CommentOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Comment_Tbl_Artical_Tbl">
+          <End Role="Artical_Tbl" Type="Self.Artical_Tbl" Multiplicity="1" />
+          <End Role="Comment_Tbl" Type="Self.Comment_Tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artical_Tbl">
+              <PropertyRef Name="ArticalId" />
+            </Principal>
+            <Dependent Role="Comment_Tbl">
+              <PropertyRef Name="ArticalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RateLimitDBModelStoreContainer">
+          <EntitySet Name="Artical_Tbl" EntityType="Self.Artical_Tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment_Tbl" EntityType="Self.Comment_Tbl" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comment_Tbl_Artical_Tbl" Association="Self.FK_Comment_Tbl_Artical_Tbl">
+            <End Role="Artical_Tbl" EntitySet="Artical_Tbl" />
+            <End Role="Comment_Tbl" EntitySet="Comment_Tbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RateLimitDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="RateLimitDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Artical_Tbl" EntityType="RateLimitDBModel.Artical_Tbl" />
+          <EntitySet Name="Comment_Tbl" EntityType="RateLimitDBModel.Comment_Tbl" />
+          <AssociationSet Name="FK_Comment_Tbl_Artical_Tbl" Association="RateLimitDBModel.FK_Comment_Tbl_Artical_Tbl">
+            <End Role="Artical_Tbl" EntitySet="Artical_Tbl" />
+            <End Role="Comment_Tbl" EntitySet="Comment_Tbl" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Artical_Tbl">
+          <Key>
+            <PropertyRef Name="ArticalId" />
+          </Key>
+          <Property Name="ArticalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArticalName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ArticalDescription" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Comment_Tbl" Relationship="RateLimitDBModel.FK_Comment_Tbl_Artical_Tbl" FromRole="Artical_Tbl" ToRole="Comment_Tbl" />
+        </EntityType>
+        <EntityType Name="Comment_Tbl">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArticalId" Type="Int32" Nullable="false" />
+          <Property Name="GuestId" Type="Guid" Nullable="false" />
+          <Property Name="CommentDescription" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="Int32" Nullable="false" />
+          <Property Name="CommentOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Artical_Tbl" Relationship="RateLimitDBModel.FK_Comment_Tbl_Artical_Tbl" FromRole="Comment_Tbl" ToRole="Artical_Tbl" />
+        </EntityType>
+        <Association Name="FK_Comment_Tbl_Artical_Tbl">
+          <End Type="RateLimitDBModel.Artical_Tbl" Role="Artical_Tbl" Multiplicity="1" />
+          <End Type="RateLimitDBModel.Comment_Tbl" Role="Comment_Tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artical_Tbl">
+              <PropertyRef Name="ArticalId" />
+            </Principal>
+            <Dependent Role="Comment_Tbl">
+              <PropertyRef Name="ArticalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RateLimitDBModelStoreContainer" CdmEntityContainer="RateLimitDBEntities">
+          <EntitySetMapping Name="Artical_Tbl">
+            <EntityTypeMapping TypeName="RateLimitDBModel.Artical_Tbl">
+              <MappingFragment StoreEntitySet="Artical_Tbl">
+                <ScalarProperty Name="ArticalDescription" ColumnName="ArticalDescription" />
+                <ScalarProperty Name="ArticalName" ColumnName="ArticalName" />
+                <ScalarProperty Name="ArticalId" ColumnName="ArticalId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comment_Tbl">
+            <EntityTypeMapping TypeName="RateLimitDBModel.Comment_Tbl">
+              <MappingFragment StoreEntitySet="Comment_Tbl">
+                <ScalarProperty Name="CommentOn" ColumnName="CommentOn" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="CommentDescription" ColumnName="CommentDescription" />
+                <ScalarProperty Name="GuestId" ColumnName="GuestId" />
+                <ScalarProperty Name="ArticalId" ColumnName="ArticalId" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

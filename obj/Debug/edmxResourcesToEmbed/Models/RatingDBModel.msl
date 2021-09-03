@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RateLimitDBModelStoreContainer" CdmEntityContainer="RateLimitDBEntities">
+    <EntitySetMapping Name="Artical_Tbl">
+      <EntityTypeMapping TypeName="RateLimitDBModel.Artical_Tbl">
+        <MappingFragment StoreEntitySet="Artical_Tbl">
+          <ScalarProperty Name="ArticalDescription" ColumnName="ArticalDescription" />
+          <ScalarProperty Name="ArticalName" ColumnName="ArticalName" />
+          <ScalarProperty Name="ArticalId" ColumnName="ArticalId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comment_Tbl">
+      <EntityTypeMapping TypeName="RateLimitDBModel.Comment_Tbl">
+        <MappingFragment StoreEntitySet="Comment_Tbl">
+          <ScalarProperty Name="CommentOn" ColumnName="CommentOn" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="CommentDescription" ColumnName="CommentDescription" />
+          <ScalarProperty Name="GuestId" ColumnName="GuestId" />
+          <ScalarProperty Name="ArticalId" ColumnName="ArticalId" />
+          <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

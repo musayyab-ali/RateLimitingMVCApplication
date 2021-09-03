@@ -1,0 +1,72 @@
+﻿@model IEnumerable<RateLimitWebApplication.ViewModel.CommentViewModel>
+@{
+    ViewBag.Title = "ShowComment";
+}
+
+<style>
+
+</style>
+
+<script type="text/javascript">
+
+    function CreatOut(rating) {
+
+        for (var i = 1; i <= rating; i++) {
+            $("#span" + i).attr('class','glyphicon glyphicon-star-empty')
+        }
+
+    }
+    function CreateOver(rating) {
+        for (var i = 1; i <= rating; i++) {
+            $("#span" + i).attr('class', 'glyphicon glyphicon-star')
+        }
+    }
+    function CreateClick(rating) {
+        $("#ibRating").val(rating);
+        for (var i = 1; i <= rating; i++) {
+            $("#span" + i).attr('class', 'glyphicon glyphicon-star')
+        }
+        for (var i = rating + 1;i <= 5; i++) {
+            $("#span" + i).attr('class', 'glyphicon glyphicon-star-empty')
+        }
+    }
+    function CreateSelected() {
+        var rating = $("#ibRating").val();
+        for (var i = 1; i <= rating; i++) {
+            $("#span" + i).attr('class', 'glyphicon glyphicon-star')
+        }
+    }
+
+    function VarifyRating() {
+        var rating = $("#ibRating").val();
+    }
+
+</script>
+
+@foreach (var item in Model)
+{
+    @Html.Partial("_CommentPartail",item)
+}
+
+
+
+<h3>Please Comment Here</h3>
+
+@using (Html.BeginForm("AddComment", "RatingComment", FormMethod.Post, new {onsubmit="retrun VarifyRating" }))
+ {
+
+    <textarea rows="6" cols="50" name="articalComment" id="txtArticalComment"></textarea>
+  <div onmouseout="CreateSelected()">
+    <span id="span1" onmouseout="CreatOut(1)" onmouseover="CreateOver(1)" onclick="CreateClick(1)" class="glyphicon glyphicon-star-empty"></span>
+    <span id="span2"  onmouseout="CreatOut(2)" onmouseover="CreateOver(2)" onclick="CreateClick(2)" class="glyphicon glyphicon-star-empty"></span>
+    <span id="span3"  onmouseout="CreatOut(3)" onmouseover="CreateOver(3)" onclick="CreateClick(3)" class="glyphicon glyphicon-star-empty"></span>
+    <span id="span4"  onmouseout="CreatOut(4)" onmouseover="CreateOver(4)" onclick="CreateClick(4)" class="glyphicon glyphicon-star-empty"></span>
+    <span id="span5"  onmouseout="CreatOut(5)" onmouseover="CreateOver(5)" onclick="CreateClick(5)" class="glyphicon glyphicon-star-empty"></span>
+  </div>
+  <div>
+      <input type="hidden"id="ibRating" />
+  </div>
+  <div>
+      <input type="submit" class="btn btn-success active" name="Save Comment" value="Save Comment"/>
+  </div>
+ }

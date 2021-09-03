@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RateLimitDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="RateLimitDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Artical_Tbl" EntityType="RateLimitDBModel.Artical_Tbl" />
+    <EntitySet Name="Comment_Tbl" EntityType="RateLimitDBModel.Comment_Tbl" />
+    <AssociationSet Name="FK_Comment_Tbl_Artical_Tbl" Association="RateLimitDBModel.FK_Comment_Tbl_Artical_Tbl">
+      <End Role="Artical_Tbl" EntitySet="Artical_Tbl" />
+      <End Role="Comment_Tbl" EntitySet="Comment_Tbl" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Artical_Tbl">
+    <Key>
+      <PropertyRef Name="ArticalId" />
+    </Key>
+    <Property Name="ArticalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ArticalName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ArticalDescription" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Comment_Tbl" Relationship="RateLimitDBModel.FK_Comment_Tbl_Artical_Tbl" FromRole="Artical_Tbl" ToRole="Comment_Tbl" />
+  </EntityType>
+  <EntityType Name="Comment_Tbl">
+    <Key>
+      <PropertyRef Name="CommentId" />
+    </Key>
+    <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ArticalId" Type="Int32" Nullable="false" />
+    <Property Name="GuestId" Type="Guid" Nullable="false" />
+    <Property Name="CommentDescription" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Rating" Type="Int32" Nullable="false" />
+    <Property Name="CommentOn" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Artical_Tbl" Relationship="RateLimitDBModel.FK_Comment_Tbl_Artical_Tbl" FromRole="Comment_Tbl" ToRole="Artical_Tbl" />
+  </EntityType>
+  <Association Name="FK_Comment_Tbl_Artical_Tbl">
+    <End Type="RateLimitDBModel.Artical_Tbl" Role="Artical_Tbl" Multiplicity="1" />
+    <End Type="RateLimitDBModel.Comment_Tbl" Role="Comment_Tbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artical_Tbl">
+        <PropertyRef Name="ArticalId" />
+      </Principal>
+      <Dependent Role="Comment_Tbl">
+        <PropertyRef Name="ArticalId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
